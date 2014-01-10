@@ -1,0 +1,7 @@
+{% extends 'twenty14/base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="content jumbotron center">
+    <p style="text-align: center">Thanks {{ user.first_name }}, your response was {{ response }}!</p>
+</div>
+{% endblock %}

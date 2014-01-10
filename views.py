@@ -13,9 +13,10 @@ def get_today(request):
     today = datetime.date.today()
     all_today = Answer.objects.filter(date = today, user = request.user)
     today_response = None
-
-    if len(all_today) > 0:
-        today_response = all_today.last()
+    
+    if all_today is not None and len(all_today) > 0:
+        size = len(all_today)
+        today_response = all_today[size - 1]
     return today_response
 
 @login_required

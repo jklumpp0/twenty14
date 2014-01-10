@@ -20,5 +20,5 @@
 <body>
 {% block content %}
 {% endblock %}
-<a href="{% url 'logout' %}?next=/">Logout</a>
+<a href="{% url 'logout' %}?next={% url 'twenty14.index' %}">Logout</a>
 </body>

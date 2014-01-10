@@ -44,9 +44,3 @@ def index(request):
             c['response'] = answer
 
         return render(request, template, c)
-
-def logout(request):
-    from django.contrib.auth import logout
-    logout(request)
-    print(request)
-    return HttpResponse("HI")

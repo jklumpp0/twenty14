@@ -8,40 +8,41 @@ from django.contrib.auth.decorators import login_required
 from .models import Answer
 from django.http import HttpResponse
 
-def get_today(request):
-    import datetime
-    today = datetime.date.today()
-    all_today = Answer.objects.filter(date = today, user = request.user)
-    today_response = None
-    
-    if all_today is not None and len(all_today) > 0:
-        size = len(all_today)
-        today_response = all_today[size - 1]
-    return today_response
+class ResponseHandler(object):
+    import logging
+    _logger = logging.getLogger('twenty14.views.ResponseHandler')
+    _logger.info("Hi %s" % __name__)
+
+    def __init__(self, request):
+        self.request = request
+        self.answer = Answer.objects.get_today(request.user)
+
+    def _get_template(self):
+        if self.answer is None:
+            return 'twenty14/index.html'
+        return 'twenty14/thanks.html'
+
+    def _get_context(self):
+        history = Answer.objects.for_user(user=self.request.user)
+        return {'response': self.answer, 'history': history}
+
+    def render(self):
+        method = getattr(self, '_' + self.request.method)
+        ResponseHandler._logger.info("Calling %s" % method)
+        return method()
+
+    def _POST(self):
+        is_better = self.request.POST['is_better']
+        response = Answer(user=self.request.user)
+        response.result = (True if is_better.upper() == "YES" else False)
+        response.save()
+        return HttpResponseRedirect(".")
+
+    def _GET(self):
+        c = RequestContext(self.request, self._get_context())
+        return render(self.request, self._get_template(), c)
 
 @login_required
 def index(request):
-    if request.method == 'POST':
-        is_better = request.POST['is_better']
-        response = Answer(user = request.user)
-
-        if type(is_better) not in (str, unicode):
-            print("WTF: %s, %s" % (is_better, type(is_better)))
-            return HttpResponseRedirect(".")
-
-        if is_better.upper() == "YES":
-            response.result = True
-        else:
-            response.result = False
-        response.save() 
-        return HttpResponseRedirect(".")
-    else:
-        c = RequestContext(request, {'name': 'Jared'})
-        answer = get_today(request) 
-        
-        template = 'twenty14/index.html'
-        if answer != None:
-            template = 'twenty14/thanks.html'
-            c['response'] = answer
-
-        return render(request, template, c)
+    handler = ResponseHandler(request)
+    return handler.render()

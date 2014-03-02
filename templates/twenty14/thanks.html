@@ -1,7 +1,16 @@
 {% extends 'twenty14/base.html' %}
 {% load staticfiles %}
 {% block content %}
-<div class="content jumbotron center">
-    <p style="text-align: center">Thanks, {{ user.first_name }}, your response was {{ response }}!</p>
+<div class="content">
+    <div class="jumbotron center">
+            <p style="text-align: center">Thanks, {{ user.first_name }}, your response was {{ response }}!</p>
+    </div>
+	<div class="history">
+		<ul>
+		{% for row in history %}
+			<li>{{ row }}</li>
+		{% endfor %}
+		</ul>
+	</div>
 </div>
 {% endblock %}

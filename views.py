@@ -23,7 +23,10 @@ class ResponseHandler(object):
         return 'twenty14/thanks.html'
 
     def _get_context(self):
+        from .funcs import accum_map
         history = Answer.objects.for_user(user=self.request.user)
+        answers = (h.result for h in history)
+        history = zip(history, accum_map(answers))
         return {'response': self.answer, 'history': history}
 
     def render(self):

@@ -13,15 +13,6 @@
         <input type="submit" value="No" class="btn btn-primary btn-lg"/>
     </div>
 
-	<div class="history">
-		<ul>
-		{% for row in history %}
-			<li>{{ row }}</li>
-        {% empty %}
-            No rows
-		{% endfor %}
-		</ul>
-	</div>
-    </div>
+    {% include 'twenty14/history.html' %}
 </form>
 {% endblock %}

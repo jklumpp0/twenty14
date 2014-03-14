@@ -3,9 +3,11 @@
 <html>
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="{% static "twenty14/js/d3.js" %}"></script>
         <link rel="stylesheet" href="{% static "twenty14/css/bootstrap.min.css" %}" />
         <link rel="stylesheet" href="{% static "twenty14/css/bootstrap-theme.min.css" %}" />
-        <script src="{% static "twenty14/js/bootstrap.min.js"></script>
+        <script src="{% static "twenty14/js/bootstrap.min.js" %}"></script>
+        <script src="{% static "twenty14/js/graph.js" %}"></script>
 <script>
     $(document).ready(function() {
         $('input:submit').click(function(data) {
@@ -21,6 +23,7 @@ a.logout {
 }
 </style>
 <head>
+<title>Better Days</title>
 </head>
 <body>
 <a class="logout" href="{% url 'logout' %}?next={% url 'twenty14.index' %}">Logout</a>

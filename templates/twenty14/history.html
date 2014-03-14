@@ -1,12 +1,9 @@
 {% load extras %}
-
-<div class="history">
-        <svg  height="300">
-		{% for row in history %}
-            <g transform="translate({% multiply 11 forloop.counter0 %}, 0)">
-                <rect width="10" height="{% multiply 10 row.1 %}" style="fill:slategray" />
-            </g>
-		{% endfor %}
+<script type="text/javascript">
+var data = [
+{% for row in history %}
+{"day": {{ forloop.counter0 }}, "value": {{ row.1 }}},
+{% endfor %} ];
+</script>
+        <svg id="history" height="300">
         </svg>
-		</ul>
-	</div>

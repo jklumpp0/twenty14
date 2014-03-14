@@ -6,7 +6,7 @@
     {% csrf_token %}
     <div class="container">
     <div class="jumbotron center" style="text-align: center;">
-        <p>Hello {{ user.first_name }},</p>
+        <p>Hello {{ user.username }},</p>
         <p>Did you do better today than yesterday?</p>
         <input type="hidden" name="is_better" id="is_better" value="" />
         <input type="submit" value="Yes" class="btn btn-primary btn-lg"/>

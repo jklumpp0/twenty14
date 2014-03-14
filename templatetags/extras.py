@@ -3,5 +3,5 @@ def multiply(lhs, rhs, *args, **kwargs):
 
 from django import template
 register = template.Library()
-register.simple_tag(multiply)
+register.simple_tag(multiply, name="multiply")
 

@@ -35,6 +35,7 @@ function setupGraph() {
                         .attr("transform", barTransform);
         var rect = bar.append("rect").attr("width", xScale(barWidth))
                         .attr("height", function(d) { return yScale(yAccessor(d)); });
+        rect.append("title").text(function(d) { return "Total points " + d.value; });
     };
     console.log("HI");
     new Graph();
